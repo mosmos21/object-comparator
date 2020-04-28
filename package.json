@@ -2,9 +2,9 @@
   "name": "object-comparator",
   "version": "1.0.0",
   "description": "This package provides functions for comparing objects.",
-  "main": "dist/index.js",
+  "main": "dist/index.min.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && uglifyjs ./dist/index.js -c -o ./dist/main.min.js",
     "prepublishOnly": "yarn build"
   },
   "files": [
@@ -20,7 +20,8 @@
     "@types/jest": "^25.2.1",
     "jest": "^25.4.0",
     "ts-jest": "^25.4.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "uglify-js": "^3.9.1"
   },
   "jest": {
     "preset": "ts-jest",
