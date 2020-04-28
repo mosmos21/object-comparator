@@ -1,0 +1,22 @@
+{
+  "name": "object-comparator",
+  "version": "1.0.0",
+  "description": "This package provides functions for comparing objects.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "yarn build"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mosmos21/object-comparator.git"
+  },
+  "author": "Takahito Hashimoto",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  }
+}
