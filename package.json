@@ -2,13 +2,14 @@
   "name": "object-comparator",
   "version": "1.0.0",
   "description": "This package provides functions for comparing objects.",
-  "main": "dist/index.min.js",
+  "main": "index.min.js",
   "scripts": {
-    "build": "tsc && uglifyjs ./dist/index.js -c -o ./dist/main.min.js",
+    "build": "tsc && uglifyjs index.js -c -o index.min.js",
     "prepublishOnly": "yarn build"
   },
   "files": [
-    "dist"
+    "index.min.js",
+    "index.d.ts"
   ],
   "repository": {
     "type": "git",
