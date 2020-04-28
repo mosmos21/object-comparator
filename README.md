@@ -7,7 +7,10 @@ This package provides functions for comparing objects.
 ## Installation
 
 ```bash
-$ 
+# use npm
+$ npm install --save object-comparator
+# use yarn
+$ yarn add object-comparator
 ```
 
 ## Usage
