@@ -18,6 +18,11 @@ export type NotEqual = { equal: false }
 
 export type Result = Equal | NotEqual
 
+export type CompareOption = Partial<{
+  classTypeComparator: (cls1: Object, cls2: Object) => Result,
+  functionTypeComparator: (fun1: Function, fun2: Function, option?: CompareOption) => Result,
+}>
+
 const EQUAL: Equal = { equal: true }
 const NOT_EQUAL: NotEqual = { equal: false }
 
@@ -52,7 +57,21 @@ export const typeOf = (obj: any): ObjectType => {
   return ObjectType.Object
 }
 
-export const compareArray = (arr1: any[], arr2: any[]): Result => {
+export const compareFunction = (fun1: Function, fun2: Function, option?: CompareOption): Result => {
+  if (option?.functionTypeComparator) {
+    return option.functionTypeComparator(fun1, fun2)
+  }
+  return fun1.name === fun2.name ? EQUAL : NOT_EQUAL
+}
+
+export const compareClass = (cls1: Object, cls2: Object, option?: CompareOption): Result => {
+  if (option?.classTypeComparator) {
+    return option.classTypeComparator(cls1, cls2)
+  }
+  return cls1.constructor.name === cls2.constructor.name ? EQUAL : NOT_EQUAL
+}
+
+export const compareArray = (arr1: any[], arr2: any[], option?: CompareOption): Result => {
   if (arr1.length !== arr2.length) {
     return NOT_EQUAL
   }
@@ -61,12 +80,12 @@ export const compareArray = (arr1: any[], arr2: any[]): Result => {
 
   return [...new Array(arr1.length).keys()]
     .map(idx => [dupArr1[idx], dupArr2[idx]])
-    .every(([obj1, obj2]) => compareObject(obj1, obj2))
+    .every(([obj1, obj2]) => compareObject(obj1, obj2, option))
       ? EQUAL
       : NOT_EQUAL
 }
 
-export const compareObject = (obj1: any, obj2: any): Result => {
+export const compareObject = (obj1: any, obj2: any, option?: CompareOption): Result => {
   const obj1Type = typeOf(obj1)
   const obj2Type = typeOf(obj2)
 
@@ -85,22 +104,22 @@ export const compareObject = (obj1: any, obj2: any): Result => {
     case ObjectType.Undefined:
       return EQUAL
     case ObjectType.Function:
-      return obj1.name === obj2.name ? EQUAL : NOT_EQUAL
+      return compareFunction(obj1, obj2, option)
     case ObjectType.Class:
-      return obj1.constructor.name === obj2.constructor.name ? EQUAL : NOT_EQUAL
+      return compareClass(obj1, obj2, option)
     case ObjectType.Array:
-      return compareArray(obj1, obj2)
+      return compareArray(obj1, obj2, option)
   }
 
   const obj1Keys = Object.keys(obj1)
-  if (obj1Keys.length !== Object.keys(obj2).length) {
+  if (obj1Keys.length < Object.keys(obj2).length) {
     return NOT_EQUAL
   }
   if (obj1Keys.length === 0) {
     return EQUAL
   }
 
-  return obj1Keys.every(key => compareObject(obj1[key], obj2[key]).equal)
+  return obj1Keys.every(key => compareObject(obj1[key], obj2[key], option).equal)
     ? EQUAL
     : NOT_EQUAL
 }

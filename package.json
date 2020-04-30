@@ -1,6 +1,6 @@
 {
   "name": "object-comparator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "This package provides functions for comparing objects.",
   "main": "index.min.js",
   "scripts": {
