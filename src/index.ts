@@ -18,10 +18,10 @@ export type NotEqual = { equal: false }
 
 export type Result = Equal | NotEqual
 
-export type CompareOption = {
-  classTypeComparator?: (cls1: Object, cls2: Object) => Result,
-  functionTypeComparator?: (fun1: Function, fun2: Function, option?: CompareOption) => Result,
-}
+export type CompareOption = Partial<{
+  classTypeComparator: (cls1: Object, cls2: Object) => Result,
+  functionTypeComparator: (fun1: Function, fun2: Function, option?: CompareOption) => Result,
+}>
 
 const EQUAL: Equal = { equal: true }
 const NOT_EQUAL: NotEqual = { equal: false }
