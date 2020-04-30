@@ -76,7 +76,7 @@ Comparing values that are ObjectType. If an optional comparison operator is give
 Compare values in an ObjectType.Array. The array is sorted and compared. Each element of the array is further compared according to the result of the typeOf function.
 
 
-#### compareObject: (obj1: any, obj2: any, option?: CompareOption) => Result**
+#### compareObject: (obj1: any, obj2: any, option?: CompareOption) => Result
 
 Takes an argument of any type, and if it is ObjectType.Object, it checks if the key/value pair is an exact match.
 
